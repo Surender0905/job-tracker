@@ -75,6 +75,11 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const { status, interviewRounds } = req.body;
+    if (typeof interviewRounds !== "number") {
+        return res.status(400).json({
+            error: "Please provide either status or interview rounds",
+        });
+    }
     try {
         const application = await Job.findByPk(id);
         if (!application) {
